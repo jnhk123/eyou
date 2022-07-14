@@ -102,4 +102,6 @@ public class TestServiceImpl implements TestService {
     }
 
 
+    public static class MyRecipeServiceImpl {
+    }
 }

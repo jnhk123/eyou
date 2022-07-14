@@ -15,42 +15,34 @@ public class RecipeBoxServiceImpl implements RecipeBoxService {
     public RecipeBoxServiceImpl(RecipeBoxRepository recipeBoxRepository) { this.recipeBoxRepository = recipeBoxRepository; }
 
     @Override
-    public List<RecipeBoxEntity> getAll()  { return recipeBoxRepository.findAll(); }
+    public List<RecipeBoxEntity> joinRecipe() { return recipeBoxRepository.findAll(); }
 
     @Override
-    public RecipeBoxEntity getById(Long id) { return recipeBoxRepository.getById(id); }
+    public List<RecipeBoxEntity> getAll() { return recipeBoxRepository.findAll(); }
 
     @Override
-    public RecipeBoxEntity insertRecipeBoxName(String name) {
+    public RecipeBoxEntity getById(Long id){
+
+        Optional<RecipeBoxEntity> recipeBoxEntity = recipeBoxRepository.findById(id);
+
+        if(recipeBoxEntity.isPresent()){
+            return recipeBoxEntity.get();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public RecipeBoxEntity insertRecipeBoxName(String name, Long userId) {
         RecipeBoxEntity recipeBoxEntity = new RecipeBoxEntity();
         recipeBoxEntity.setName(name);
+        recipeBoxEntity.setUserId(userId);
         recipeBoxEntity.setIsDefault(false);
         return recipeBoxRepository.save(recipeBoxEntity);
     }
 
     @Override
-    public RecipeBoxEntity insertRecipeBox(RecipeBoxEntity entity) {
-        entity.setIsDefault(true);
-        return recipeBoxRepository.save(entity);
-    }
-
-    @Override
-    public RecipeBoxEntity updateRecipeBoxNameById(Long id, String name) {
-        RecipeBoxEntity result = null;
-
-        Optional<RecipeBoxEntity> recipeBoxEntity = recipeBoxRepository.findById(id);
-
-        if(recipeBoxEntity.isPresent()){
-            if(recipeBoxEntity.get().getIsDefault() == null || recipeBoxEntity.get().getIsDefault().equals(false)){
-                RecipeBoxEntity entity = new RecipeBoxEntity();
-                entity.setName(name);
-                result = recipeBoxRepository.save(entity);
-            } else {
-                System.out.println("기본 레시피 이름을 수정할 수 없음");
-            }
-        }
-        return result;
-    }
+    public RecipeBoxEntity insertRecipeBox(RecipeBoxEntity entity) { return recipeBoxRepository.save(entity); }
 
     @Override
     public RecipeBoxEntity updateRecipeBox(RecipeBoxEntity entity) {
@@ -64,19 +56,31 @@ public class RecipeBoxServiceImpl implements RecipeBoxService {
             return "삭제성공";
         }
         else {
-            return "존재하지 않음";
+            return "아이디가 존재하지 않음";
+        }
+    }
+
+    @Override
+    public String deleteRecipeBoxByName(String name) {
+        if(!recipeBoxRepository.findByName(name).isEmpty()) {
+            List<RecipeBoxEntity> recipeBoxEntityList = recipeBoxRepository.findByName(name);
+            for(int i=0; i<recipeBoxEntityList.size(); i++) {
+                RecipeBoxEntity recipeBox = recipeBoxEntityList.get(i);
+                if(recipeBox.getIsDefault() == true){
+                    return "기본 박스는 삭제 할 수 없습니다.";
+                }
+            }
+            recipeBoxRepository.deleteByName(name);
+            return "삭제성공";
+        }
+        else {
+            return "박스가 존재하지 않음";
         }
     }
 
     @Override
     public String deleteRecipeBoxAll() {
-        if(recipeBoxRepository.count() > 0 ) {
-            recipeBoxRepository.deleteAll();
-            return "모두 삭제 성공";
-        }
-        else {
-            return "존재하지 않음";
-        }
+        return null;
     }
 
     @Override
@@ -93,5 +97,4 @@ public class RecipeBoxServiceImpl implements RecipeBoxService {
     public RecipeBoxEntity findByIsDefault(Boolean isDefault) {
         return recipeBoxRepository.findByIsDefault(isDefault);
     }
-
 }

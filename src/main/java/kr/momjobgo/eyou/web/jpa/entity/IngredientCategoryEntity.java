@@ -15,7 +15,7 @@ public class IngredientCategoryEntity {
     private Long id;
 
     @Column(name = "title")
-    private String name;
+    private String title;
 
     @Column(name = "key")
     private String key;

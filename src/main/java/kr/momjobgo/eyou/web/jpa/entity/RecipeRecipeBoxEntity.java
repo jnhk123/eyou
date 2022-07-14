@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity(name = "RECIPE_RECIPE_BOX")
+@Entity(name = "RECIPE_RECIPEBOX_MAP")
 @Data
 public class RecipeRecipeBoxEntity {
     @Id

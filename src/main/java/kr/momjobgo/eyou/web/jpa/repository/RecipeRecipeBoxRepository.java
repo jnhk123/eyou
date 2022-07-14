@@ -11,6 +11,6 @@ import java.util.List;
 public interface RecipeRecipeBoxRepository extends JpaRepository<RecipeRecipeBoxEntity, Long> {
     List<RecipeBoxEntity> findByRecipeId(Long id);
 
-    List<RecipeBoxEntity> findByNameContains(Long id);
+//    List<RecipeBoxEntity> findByNameContains(String name);
 
 }
