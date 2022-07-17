@@ -1,5 +1,6 @@
 package kr.momjobgo.eyou.web.jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kr.momjobgo.eyou.web.jpa.entity.base.BaseTimeEntity;
 import lombok.Data;
 import org.hibernate.annotations.JoinColumnOrFormula;
@@ -24,6 +25,7 @@ public class RecipeBoxEntity extends BaseTimeEntity {
             joinColumns = @JoinColumn(name = "recipe_box_id"),      // 현재 엔티티를 참조하는 외래키
             inverseJoinColumns = @JoinColumn(name = "recipe_id")    // 반대방향 엔티티를 참조하는 외래키
     )
+    @JsonIgnore
     private List<RecipeEntity> recipeEntities = new ArrayList<>();
 
     @Column(name = "user_id")

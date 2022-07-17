@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/recipebox")
+@RequestMapping("/api/recipebox")
 public class RecipeBoxController {
     private final RecipeBoxService recipeBoxService;
 
@@ -21,45 +21,49 @@ public class RecipeBoxController {
         return ResponseEntity.ok().body( recipeBoxService.getAll() );
     }
 
-    @GetMapping("/id={id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) { return ResponseEntity.ok().body( recipeBoxService.getById(id) ); }
 
-    @PostMapping("/name={name}&user={userId}")
+    @PostMapping("/{name}")
     public ResponseEntity<?> insertRecipeBoxName(
-            @PathVariable String name,
-            @PathVariable Long userId){
-        return ResponseEntity.status(HttpStatus.CREATED).body(recipeBoxService.insertRecipeBoxName(name, userId));
+            @PathVariable String name){
+        return ResponseEntity.status(HttpStatus.CREATED).body(recipeBoxService.insertRecipeBoxName(name));
     }
 
-        @PostMapping("/default")
-        public ResponseEntity<?> insertRecipeBoxDefault(@RequestBody RecipeBoxEntity recipeBoxEntity){
-            return ResponseEntity.status(HttpStatus.CREATED).body(recipeBoxService.insertRecipeBox(recipeBoxEntity));
-        }
+    @PostMapping("/default")
+    public ResponseEntity<?> insertRecipeBoxDefault(@RequestBody RecipeBoxEntity recipeBoxEntity){
+        return ResponseEntity.status(HttpStatus.CREATED).body(recipeBoxService.insertRecipeBox(recipeBoxEntity));
+    }
+
+    @GetMapping("/default")
+    public ResponseEntity<?> getRecipeBoxDefault(){
+        return ResponseEntity.status(HttpStatus.CREATED).body(recipeBoxService.findByIsDefault());
+    }
 
         @PatchMapping("/")
         public ResponseEntity<?> updateRecipeBox(@RequestBody RecipeBoxEntity recipeBoxEntity){
             return ResponseEntity.ok().body(recipeBoxService.updateRecipeBox(recipeBoxEntity));
         }
 
-        @DeleteMapping("/id={id}")    // id에 해당되는 데이터 삭제. 없는 id일 경유 500 에러 발생
+        @DeleteMapping("/{id}")    // id에 해당되는 데이터 삭제. 없는 id일 경유 500 에러 발생
         public ResponseEntity<?> deleteRecipeBoxById(@PathVariable Long id) {
             return ResponseEntity.ok().body(recipeBoxService.deleteRecipeBoxById(id));
         }
 
-        @DeleteMapping("/name={name}")
-        public ResponseEntity<?> deleteRecipeBoxByName(@PathVariable String name) {
-            return ResponseEntity.ok().body(recipeBoxService.deleteRecipeBoxByName(name));
-        }
+//        @DeleteMapping("/{name}")
+//        public ResponseEntity<?> deleteRecipeBoxByName(@PathVariable String name) {
+//            return ResponseEntity.ok().body(recipeBoxService.deleteRecipeBoxByName(name));
+//        }
 
         @DeleteMapping("/all")
         public ResponseEntity<?> deleteRecipeBoxAll() {
             return ResponseEntity.ok().body(recipeBoxService.deleteRecipeBoxAll());
         }
 
-        @GetMapping("/name={name}")
-        public ResponseEntity<?> getRecipeBoxByName(@PathVariable String name){
-            return ResponseEntity.ok().body(recipeBoxService.findByName(name));
-        }
+//        @GetMapping("/{name}")
+//        public ResponseEntity<?> getRecipeBoxByName(@PathVariable String name){
+//            return ResponseEntity.ok().body(recipeBoxService.findByName(name));
+//        }
 
         @GetMapping("/contains?name={name}")
         public ResponseEntity<?> getRecipeBoxByNameContains(@RequestParam String name){

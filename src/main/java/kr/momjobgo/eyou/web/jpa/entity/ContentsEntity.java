@@ -2,10 +2,12 @@ package kr.momjobgo.eyou.web.jpa.entity;
 
 import kr.momjobgo.eyou.web.jpa.entity.base.BaseTimeEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity(name = "CONTENTS")
 public class ContentsEntity extends BaseTimeEntity {
     @Id
@@ -28,6 +30,6 @@ public class ContentsEntity extends BaseTimeEntity {
     @Column(name = "contents")
     private String contents;
 
-    @Column(name = "use")
-    private String use;
+    @Column(name = "enable")
+    private String enable;
 }

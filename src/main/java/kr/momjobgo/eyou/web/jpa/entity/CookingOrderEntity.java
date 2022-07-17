@@ -4,21 +4,20 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity(name = "RECIPE_INGREDIENT_MAP")
 @Data
-public class RecipeIngredientMapEntity {
-
+@Entity(name = "COOKING_ORDER")
+public class CookingOrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "ingredient_id")
-    private Long ingredientId;
-
     @Column(name = "recipe_id")
     private Long recipeId;
 
-    @Column(name = "volume")
-    private Long volume;
+    @Column(name = "contents_no")
+    private Long contentsNo;
+
+    @Column(name = "contents")
+    private String contents;
 }
