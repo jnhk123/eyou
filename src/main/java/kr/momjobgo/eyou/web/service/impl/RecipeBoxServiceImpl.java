@@ -1,6 +1,5 @@
 package kr.momjobgo.eyou.web.service.impl;
 
-import kr.momjobgo.eyou.config.security.UserManager;
 import kr.momjobgo.eyou.web.jpa.entity.RecipeBoxEntity;
 import kr.momjobgo.eyou.web.jpa.repository.RecipeBoxRepository;
 import kr.momjobgo.eyou.web.service.RecipeBoxService;
@@ -34,11 +33,10 @@ public class RecipeBoxServiceImpl implements RecipeBoxService {
     }
 
     @Override
-    public RecipeBoxEntity insertRecipeBoxName(String name) {
-
+    public RecipeBoxEntity insertRecipeBoxName(String name, Long userId) {
         RecipeBoxEntity recipeBoxEntity = new RecipeBoxEntity();
         recipeBoxEntity.setName(name);
-        recipeBoxEntity.setUserId(UserManager.getUser().getId());
+        recipeBoxEntity.setUserId(userId);
         recipeBoxEntity.setIsDefault(false);
         return recipeBoxRepository.save(recipeBoxEntity);
     }
@@ -96,7 +94,7 @@ public class RecipeBoxServiceImpl implements RecipeBoxService {
     }
 
     @Override
-    public RecipeBoxEntity findByIsDefault() {
-        return recipeBoxRepository.findByIsDefault(true);
+    public RecipeBoxEntity findByIsDefault(Boolean isDefault) {
+        return recipeBoxRepository.findByIsDefault(isDefault);
     }
 }
