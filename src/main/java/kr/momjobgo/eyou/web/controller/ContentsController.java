@@ -20,7 +20,7 @@ public class ContentsController {
         return ResponseEntity.ok().body( contentsService.getAll() );
     }
 
-    @GetMapping("/id={id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) { return ResponseEntity.ok().body( contentsService.getById(id) ); }
 
     @GetMapping("/writer={writer}")

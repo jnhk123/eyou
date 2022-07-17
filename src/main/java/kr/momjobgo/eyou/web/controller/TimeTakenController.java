@@ -19,7 +19,7 @@ public class TimeTakenController {
         return ResponseEntity.ok().body( timeTakenService.getAll() );
     }
 
-    @GetMapping("/id={id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) { return ResponseEntity.ok().body( timeTakenService.getById(id) ); }
 
 }
