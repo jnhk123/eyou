@@ -19,6 +19,4 @@ public class RecipeIngredientMapEntity {
     @Column(name = "recipe_id")
     private Long recipeId;
 
-    @Column(name = "volume")
-    private Long volume;
 }

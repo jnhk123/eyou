@@ -1,14 +1,11 @@
 package kr.momjobgo.eyou.web.jpa.entity;
 
 import lombok.Data;
-import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity(name = "RECIPE")
-@DynamicInsert
 public class RecipeEntity {
 
     @Id
@@ -16,13 +13,8 @@ public class RecipeEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "contents_id")
-    private ContentsEntity contentsEntity;
-
-    @OneToMany
-    @JoinColumn(name = "recipe_id")
-    private List<RecipeIngredientMapEntity> recipeIngredientMapEntities;
+    @Column(name = "contents_id")
+    private Long contentsId;
 
     @Column(name = "period")
     private Long period;
@@ -42,14 +34,6 @@ public class RecipeEntity {
     @Column(name = "youtube_link")
     private String youtubeLink;
 
-    @Column(name = "subscribe")
-    private Long subscribe;
-
-    @OneToMany
-    @JoinColumn(name = "recipe_id")
-    private List<TipEntity> tipEntities;
-
-    @OneToMany
-    @JoinColumn(name = "recipe_id")
-    private List<CookingOrderEntity> cookingOrderEntities;
+    public void setRecipeBox(RecipeBoxEntity recipeBox) {
+    }
 }
